@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#071310" />
+    <title>GitHub IPTV Analyzer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">◈</span><span>GITHUB <strong>IPTV</strong> ANALYZER</span></div>
+      <div class="api-status"><span class="dot" id="statusDot"></span><span id="statusText">API READY</span></div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="intro">
+          <p class="eyebrow">PUBLIC SOURCE INTELLIGENCE / READ ONLY</p>
+          <h1>Map public IPTV<br /><em>configuration signals.</em></h1>
+          <p class="subcopy">Search public GitHub code, parse text lists locally, and retain full traceability to the original source repository and file.</p>
+        </div>
+        <div class="hero-badge">
+          <span>SAFE MODE</span>
+          <strong>GITHUB API ONLY</strong>
+          <small>No auth<br />No password testing<br />No external probing</small>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Main navigation">
+        <button class="tab active" data-tab="scan">SCAN</button>
+        <button class="tab" data-tab="hosts">HOST <span id="hostCount">0</span></button>
+        <button class="tab" data-tab="users">USERS <span id="userCount">0</span></button>
+        <button class="tab" data-tab="proxies">PROXIES <span id="proxyCount">0</span></button>
+        <button class="tab" data-tab="about">ABOUT</button>
+      </nav>
+
+      <section class="panel active-panel" id="scan">
+        <div class="card query-card">
+          <div class="card-heading">
+            <span class="section-label">01 / SEARCH PARAMETERS</span>
+            <span class="key-hint">PUBLIC GITHUB CODE SEARCH</span>
+          </div>
+
+          <label for="queryInput">GITHUB SEARCH QUERY</label>
+          <div class="query-row">
+            <input id="queryInput" value="iptv m3u" placeholder="e.g. m3u IPTV" />
+            <button id="searchBtn" class="primary">SEARCH GITHUB</button>
+          </div>
+
+          <div class="filters">
+            <label>
+              REPOSITORY FILTER
+              <input id="repoInput" placeholder="owner/repository (optional)" />
+            </label>
+
+            <label>
+              FILE EXTENSION
+              <select id="extensionInput">
+                <option value="">ALL TEXT FILES</option>
+                <option value="txt">TXT</option>
+                <option value="m3u">M3U</option>
+                <option value="json">JSON</option>
+                <option value="py">PY</option>
+                <option value="php">PHP</option>
+                <option value="yaml">YAML</option>
+                <option value="conf">CONF</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="action-row">
+            <button id="stopBtn" class="ghost" disabled>■ STOP</button>
+            <button id="clearBtn" class="ghost">× CLEAR</button>
+            <button id="sortBtn" class="ghost">SORT BY SOURCE</button>
+            <span id="progress" class="progress">IDLE · RESULTS REMAIN LOCAL</span>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat"><small>REPOSITORIES FOUND</small><strong id="statRepos">0</strong></div>
+          <div class="stat"><small>FILES FOUND</small><strong id="statFiles">0</strong></div>
+          <div class="stat green"><small>HOSTS</small><strong id="statHosts">0</strong></div>
+          <div class="stat cyan"><small>USERS</small><strong id="statUsers">0</strong></div>
+          <div class="stat orange"><small>PROXIES</small><strong id="statProxies">0</strong></div>
+          <div class="stat"><small>URLS</small><strong id="statUrls">0</strong></div>
+          <div class="stat"><small>DUPLICATES REMOVED</small><strong id="statDuplicates">0</strong></div>
+        </div>
+
+        <div class="card activity-card">
+          <div class="card-heading"><span class="section-label">LIVE ACTIVITY</span><span id="rateLimit">RATE LIMIT —</span></div>
+          <div id="activityBox" class="activity-box"><p>_ waiting for public GitHub query... <span class="blink">_</span></p></div>
+        </div>
+      </section>
+
+      <section class="panel" id="hosts">
+        <div class="card results-card">
+          <div class="results-head">
+            <div><span class="section-label">HOST INVENTORY</span><h2>Resolved endpoints</h2></div>
+            <div class="tools">
+              <input class="filter-input" data-filter="hosts" placeholder="FILTER HOSTS" />
+              <button class="ghost export" data-kind="hosts">EXPORT CSV</button>
+              <button class="ghost copy" data-kind="hosts">COPY</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>HOST</th><th>PORT</th><th>PROTOCOL</th><th>SOURCE REPOSITORY</th><th>SOURCE FILE</th></tr></thead><tbody id="hostsBody"><tr><td colspan="5" class="empty">Run a search to populate traceable hosts.</td></tr></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="users">
+        <div class="card results-card">
+          <div class="results-head">
+            <div><span class="section-label">PUBLIC IDENTIFIERS</span><h2>Listed usernames</h2></div>
+            <div class="tools">
+              <input class="filter-input" data-filter="users" placeholder="FILTER USERS" />
+              <button class="ghost export" data-kind="users">EXPORT TXT</button>
+              <button class="ghost copy" data-kind="users">COPY</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>USERNAME</th><th>SOURCE REPOSITORY</th><th>SOURCE FILE</th></tr></thead><tbody id="usersBody"><tr><td colspan="3" class="empty">Run a search to populate traceable usernames.</td></tr></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="proxies">
+        <div class="card results-card">
+          <div class="results-head">
+            <div><span class="section-label">EXPLICIT CONFIG VALUES</span><h2>Publicly listed proxies</h2></div>
+            <div class="tools">
+              <input class="filter-input" data-filter="proxies" placeholder="FILTER PROXIES" />
+              <button class="ghost export" data-kind="proxies">EXPORT CSV</button>
+              <button class="ghost copy" data-kind="proxies">COPY</button>
+            </div>
+          </div>
+          <div class="notice">Only values explicitly marked as proxy configuration are displayed. The analyzer never connects to or tests a proxy.</div>
+          <div class="table-wrap">
+            <table><thead><tr><th>PROXY</th><th>PORT</th><th>PROTOCOL</th><th>SOURCE REPOSITORY</th><th>SOURCE FILE</th></tr></thead><tbody id="proxiesBody"><tr><td colspan="5" class="empty">Run a search to populate traceable proxies.</td></tr></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="about">
+        <div class="card about-card">
+          <span class="section-label">SYSTEM NOTES</span>
+          <h2>Transparent by design.</h2>
+          <p>GitHub IPTV Analyzer queries only official public GitHub API endpoints and public repository URLs. Parsing is done locally in the browser. No credentials are requested, no password checks are performed, no private content is accessed, and no server or proxy testing is attempted.</p>
+          <div class="about-grid">
+            <div><b>RATE LIMITING</b><span>Uses response headers and stops safely when public API rate limits are reached.</span></div>
+            <div><b>PAGINATION</b><span>Requests results page by page and keeps all output traceable to the source file.</span></div>
+            <div><b>TRACEABILITY</b><span>Every result contains the public repository and file it was extracted from.</span></div>
+            <div><b>LOCAL EXPORTS</b><span>Exports are generated in-browser and never uploaded.</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>GITHUB IPTV ANALYZER <span>·</span> PUBLIC DATA, PUBLIC SOURCES, READ-ONLY WORKFLOW</footer>
+    <script src="./app.js"></script>
+  </body>
+</html>

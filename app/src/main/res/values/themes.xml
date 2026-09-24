@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.GitHubIPTVAnalyzer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#0a1412</item>
+        <item name="colorPrimaryVariant">#0b1716</item>
+        <item name="colorOnPrimary">#dffaf0</item>
+        <item name="colorSecondary">#63ebff</item>
+        <item name="colorOnSecondary">#081111</item>
+        <item name="android:statusBarColor">#050708</item>
+        <item name="android:navigationBarColor">#050708</item>
+        <item name="android:windowBackground">#050708</item>
+    </style>
+</resources>
